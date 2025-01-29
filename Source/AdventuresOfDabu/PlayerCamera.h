@@ -27,6 +27,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
-	void Click();
+	APlayerController* DabuController; // 플레이어 컨트롤러
+
+	void Click(); // 클릭 이벤트
 
 };

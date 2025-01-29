@@ -2,6 +2,7 @@
 
 
 #include "PlayerCamera.h"
+#include "ClickedComponent.h"
 
 // Sets default values
 APlayerCamera::APlayerCamera()
@@ -16,6 +17,7 @@ void APlayerCamera::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	DabuController = Cast<APlayerController>(GetController());
 }
 
 // Called every frame
@@ -36,4 +38,27 @@ void APlayerCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 void APlayerCamera::Click()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Click"));
+
+	if (DabuController)
+	{
+		FHitResult HitResult;
+		DabuController->GetHitResultUnderCursor(
+			ECollisionChannel::ECC_Visibility,
+			false,
+			HitResult);
+
+		AActor* ClickedActor = HitResult.GetActor(); // 클릭한 액터
+
+		if (ClickedActor)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Clicked Actor: %s"), *ClickedActor->GetActorLabel());
+
+			// 컴포넌트 찾기
+			UClickedComponent* ClickedComponent = ClickedActor->FindComponentByClass<UClickedComponent>();
+			if (ClickedComponent)
+			{
+				ClickedComponent->Clicked();
+			}
+		}
+	}
 }
