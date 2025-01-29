@@ -30,5 +30,10 @@ void APlayerCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PlayerInputComponent->BindAction(TEXT("Click"), IE_Pressed, this, &APlayerCamera::Click);
 }
 
+void APlayerCamera::Click()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Click"));
+}
