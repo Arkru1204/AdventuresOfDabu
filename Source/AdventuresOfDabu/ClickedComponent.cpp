@@ -36,4 +36,6 @@ void UClickedComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 void UClickedComponent::Clicked()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Reacted Actor : %s"), *GetOwner()->GetActorLabel());
+
+	GetOwner()->SetActorLocation(FVector(0, -60, -50));
 }
