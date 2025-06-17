@@ -12,7 +12,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Move")]
     [SerializeField, Range(0f, 10f)]
-    private float moveSpeed = 10;
+    private float moveSpeed = 5f;
+    [SerializeField, Range(0f, 100f)]
+    private float jumpPower = 10f;
 
     void Start()
     {
@@ -21,7 +23,6 @@ public class PlayerController : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
     }
 
-    
     void Update()
     {
         GetInput();
@@ -49,4 +50,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnJump()
+    {
+        if (rigid.linearVelocity.y != 0)
+            return;
+
+        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+    }
 }
