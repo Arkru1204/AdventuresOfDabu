@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
@@ -40,15 +41,6 @@ public class PlayerController : MonoBehaviour
         Falling();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-            Landing();
-        }
-    }
-
     // 플레이어 입력 처리
     private void GetInput()
     {
@@ -79,8 +71,9 @@ public class PlayerController : MonoBehaviour
     }
 
     // 플레이어 착지
-    private void Landing()
+    public void Landing()
     {
+        isGrounded = true;
         anim.SetBool("isFall", false);
         anim.SetTrigger("onLand");
     }
@@ -89,9 +82,6 @@ public class PlayerController : MonoBehaviour
     private void OnJump()
     {
         if (rigid.linearVelocity.y != 0) // 이미 점프 중이면
-            return;
-        
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Land")) // 현재 실행중인 애니메이션이 착지라면 점프하지 않음
             return;
 
         isGrounded = false;
